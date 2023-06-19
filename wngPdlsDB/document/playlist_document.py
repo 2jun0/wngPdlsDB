@@ -1,6 +1,7 @@
 from mongoengine import Document, StringField, IntField, DateTimeField
 
-class Playlist(Document):
+
+class PlaylistDocument(Document):
     genie_id = IntField(required=True)
     title = StringField(required=True)
     description = StringField(required=True)
