@@ -29,5 +29,5 @@ class PlaylistDocument(Document):
             self.views,
             self.created_date,
             self.updated_date,
-            [tag.to_dto for tag in self.tags],
+            [tag.to_dto() for tag in self.tags],
         )
