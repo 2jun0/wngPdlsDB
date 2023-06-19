@@ -43,7 +43,7 @@ class TestPlaylist(unittest.TestCase):
         self.assertRaises(NotFoundTagException, lambda: self.__playlist(3, [fake_tag]))
 
         # not exists song
-        fake_song = SongDto("S3", "없는것", artist, album)
+        fake_song = SongDto("1234", "S3", "없는것", artist, album)
         self.assertRaises(
             NotFoundSongException, lambda: self.__playlist(3, [tag], [fake_song])
         )
@@ -141,7 +141,7 @@ class TestPlaylist(unittest.TestCase):
             assert playlist not in found
 
         # not exists song
-        fake_song = SongDto("S4", "노래", artist, album)
+        fake_song = SongDto("1234", "S4", "노래", artist, album)
 
         self.assertRaises(
             NotFoundSongException,

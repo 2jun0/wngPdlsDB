@@ -12,6 +12,7 @@ class SongDocument(Document):
 
     def to_dto(self) -> SongDto:
         return SongDto(
+            str(self.id),
             self.genie_id,
             self.title,
             self.artist.to_dto(),

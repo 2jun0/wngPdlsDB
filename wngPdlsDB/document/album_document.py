@@ -7,4 +7,4 @@ class AlbumDocument(Document):
     title = StringField(required=True)
 
     def to_dto(self) -> AlbumDto:
-        return AlbumDto(self.genie_id, self.title)
+        return AlbumDto(str(self.id), self.genie_id, self.title)

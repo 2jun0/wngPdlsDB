@@ -7,4 +7,4 @@ class ArtistDocument(Document):
     name = StringField(required=True)
 
     def to_dto(self) -> ArtistDto:
-        return ArtistDto(self.genie_id, self.name)
+        return ArtistDto(str(self.id), self.genie_id, self.name)
