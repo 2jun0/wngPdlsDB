@@ -7,7 +7,7 @@ from mongoengine import (
     ReferenceField,
 )
 from wngPdlsDB.dto import PlaylistDto
-from wngPdlsDB.document import TagDocument
+from wngPdlsDB.document.tag_document import TagDocument
 
 
 class PlaylistDocument(Document):
