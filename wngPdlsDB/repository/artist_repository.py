@@ -1,4 +1,5 @@
 from wngPdlsDB.document import ArtistDocument
+from wngPdlsDB.exception import NotFoundArtistException
 from wngPdlsDB.dto import ArtistDto
 
 
@@ -8,11 +9,22 @@ class ArtistRepository:
         saved: ArtistDocument = artist.save()
         return saved.to_dto()
 
-    def delete_artist(self, genie_id: str) -> None:
-        self.find_by_genie_id(genie_id).delete()
+    def delete_by_genie_id(self, genie_id: str) -> None:
+        artist: ArtistDocument = ArtistDocument.objects(genie_id=genie_id)
+
+        if not artist:
+            raise NotFoundArtistException(
+                f"Can't find artist document: genie_id={genie_id}"
+            )
+
+        artist.delete()
 
     def find_by_genie_id(self, genie_id: str) -> ArtistDto:
         artist: ArtistDocument = ArtistDocument.objects(genie_id=genie_id).first()
+
+        if not artist:
+            return None
+
         return artist.to_dto()
 
     def find_all(self) -> list[ArtistDto]:

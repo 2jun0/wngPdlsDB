@@ -17,10 +17,10 @@ class TestAlbum(unittest.TestCase):
         wngPdlsDB.disconnect()
 
     def test_create_album(self):
-        self.__album("G1", "기쁨")
+        album = self.__album("A1", "주혜인 1집")
 
     def test_delete_by_genie_id(self):
-        album = self.__album("G1", "기쁨")
+        album = self.__album("A1", "주혜인 1집")
 
         self.albumRepository.delete_by_genie_id(album.genie_id)
         found = self.albumRepository.find_by_genie_id(album.genie_id)
@@ -33,7 +33,7 @@ class TestAlbum(unittest.TestCase):
         )
 
     def test_find_by_geine_id(self):
-        album = self.__album("G1", "기쁨")
+        album = self.__album("A1", "주혜인 1집")
 
         found = self.albumRepository.find_by_genie_id(album.genie_id)
         assert album == found
