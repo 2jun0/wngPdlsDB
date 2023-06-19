@@ -11,7 +11,7 @@ from wngPdlsDB.exception import (
 class PlaylistRepository:
     def create_playlist(
         self,
-        genie_id: int,
+        genie_id: str,
         title: str,
         description: str,
         likes: int,
@@ -31,7 +31,7 @@ class PlaylistRepository:
         saved: PlaylistDocument = playlist.save()
         return saved.to_dto()
 
-    def delete_by_genie_id(self, genie_id: int) -> None:
+    def delete_by_genie_id(self, genie_id: str) -> None:
         query_set = PlaylistDocument.objects(genie_id=genie_id)
 
         if not query_set:
@@ -41,7 +41,7 @@ class PlaylistRepository:
 
         query_set.delete()
 
-    def find_by_genie_id(self, genie_id: int) -> PlaylistDto | None:
+    def find_by_genie_id(self, genie_id: str) -> PlaylistDto | None:
         playlist: PlaylistDocument = PlaylistDocument.objects(genie_id=genie_id).first()
 
         if not playlist:

@@ -11,7 +11,7 @@ from wngPdlsDB.document.song_document import SongDocument
 
 
 class PlaylistDocument(Document):
-    genie_id = IntField(required=True)
+    genie_id = StringField(required=True)
     title = StringField(required=True)
     description = StringField(required=True)
     likes = IntField(required=True)

@@ -6,7 +6,7 @@ from wngPdlsDB.dto.song_dto import SongDto
 @dataclass
 class PlaylistDto:
     id: str
-    genie_id: int
+    genie_id: str
     title: str
     description: str
     likes: int
