@@ -24,3 +24,11 @@ class PlaylistRepository:
         )
         saved: PlaylistDocument = playlist.save()
         return saved.to_dto()
+
+    def find_by_genie_id(self, genie_id: str) -> PlaylistDto:
+        playlist: PlaylistDocument = PlaylistDocument.objects(genie_id=genie_id).first()
+        return playlist.to_dto()
+
+    def find_all(self) -> list[PlaylistDto]:
+        playlists: list[PlaylistDocument] = list(PlaylistDocument.objects)
+        return [playlist.to_dto() for playlist in playlists]
