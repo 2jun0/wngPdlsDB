@@ -22,6 +22,7 @@ class PlaylistDocument(Document):
 
     def to_dto(self) -> PlaylistDto:
         return PlaylistDto(
+            self.id,
             self.genie_id,
             self.title,
             self.description,

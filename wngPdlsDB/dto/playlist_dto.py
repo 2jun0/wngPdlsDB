@@ -5,6 +5,7 @@ from wngPdlsDB.dto import TagDto
 
 @dataclass
 class PlaylistDto:
+    id: str
     genie_id: int
     title: str
     description: str
