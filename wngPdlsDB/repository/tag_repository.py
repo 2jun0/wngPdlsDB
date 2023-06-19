@@ -8,7 +8,7 @@ class TagRepository:
         return tag.save()
 
     def delete_tag(self, genie_id: str) -> None:
-        self.__find(genie_id=genie_id)
+        self.find_by_genie_id(genie_id).delete()
 
     def find_by_genie_id(self, genie_id: str) -> Tag:
         return Tag.objects(genie_id=genie_id).first()
