@@ -11,8 +11,6 @@ class PlaylistRepository:
         description: str,
         likes: int,
         views: int,
-        created_date,
-        updated_date,
         tags: list[TagDto],
     ) -> PlaylistDto:
         playlist = PlaylistDocument(
@@ -21,9 +19,7 @@ class PlaylistRepository:
             description=description,
             likes=likes,
             views=views,
-            created_date=created_date,
-            updated_date=updated_date,
-            tags=self.__find_tags_doc_by_tdo(tags),
+            tags=self.__find_tags_doc_by_dto(tags),
         )
         saved: PlaylistDocument = playlist.save()
         return saved.to_dto()
@@ -40,13 +36,13 @@ class PlaylistRepository:
         return [playlist.to_dto() for playlist in playlists]
 
     def find_by_tag(self, tag: TagDto) -> list[PlaylistDto]:
-        tag_doc = self.__find_tag_doc_by_tdo(tag)
+        tag_doc = self.__find_tag_doc_by_dto(tag)
         playlist: PlaylistDocument = PlaylistDocument.objects(tag=tag_doc).first()
         return playlist.to_dto()
 
-    def __find_tag_doc_by_tdo(self, tag: TagDto) -> TagDocument:
+    def __find_tag_doc_by_dto(self, tag: TagDto) -> TagDocument:
         return TagDocument.objects(genie_id=tag.genie_id).first()
 
-    def __find_tags_doc_by_tdo(self, tags: list[TagDto]) -> QuerySet:
+    def __find_tags_doc_by_dto(self, tags: list[TagDto]) -> QuerySet:
         tag_genie_ids = [tag.genie_id for tag in tags]
         return TagDocument.objects(genie_id__in=tag_genie_ids)
