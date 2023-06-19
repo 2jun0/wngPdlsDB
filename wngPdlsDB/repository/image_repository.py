@@ -16,7 +16,7 @@ class ImageRepository:
         return saved.to_dto()
 
     def delete_by_id(self, id: str) -> None:
-        self.find_by_genie_id().delete()
+        self.find_by_id(id).delete()
 
     def find_by_id(self, id: str) -> ImageDto:
         image: ImageDocument = ImageDocument.objects(id=id)
