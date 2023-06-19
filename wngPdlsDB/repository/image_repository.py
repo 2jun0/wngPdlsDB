@@ -16,10 +16,10 @@ class ImageRepository:
         return saved.to_dto()
 
     def delete_by_id(self, id: str) -> None:
-        self.find_by_id(id).delete()
+        ImageDocument.objects(id=id).delete()
 
     def find_by_id(self, id: str) -> ImageDto:
-        image: ImageDocument = ImageDocument.objects(id=id)
+        image: ImageDocument = ImageDocument.objects(id=id).first()
         return image.to_dto()
 
     def find_all(self) -> list[ImageDto]:
