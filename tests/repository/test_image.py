@@ -36,6 +36,12 @@ class TestImage(unittest.TestCase):
         tag = self.__tag("G1", "기쁨")
         self.__image("http://google.com/1", tag)
 
+        # not exists tag
+        fake_tag = TagDto("123", "G3", "없는것")
+        self.assertRaises(
+            NotFoundTagException, lambda: self.__image("http://google.com/2", fake_tag)
+        )
+
     def test_delete_by_id(self):
         # success
         tag = self.__tag("G1", "기쁨")
