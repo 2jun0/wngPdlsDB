@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from datetime import datetime
 from wngPdlsDB.dto.tag_dto import TagDto
 
 
@@ -11,6 +10,4 @@ class PlaylistDto:
     description: str
     likes: int
     views: int
-    created_date: datetime
-    updated_date: datetime
     tags: list[TagDto]

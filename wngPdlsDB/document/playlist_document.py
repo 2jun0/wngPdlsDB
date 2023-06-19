@@ -2,7 +2,6 @@ from mongoengine import (
     Document,
     StringField,
     IntField,
-    DateTimeField,
     ListField,
     ReferenceField,
 )
@@ -16,8 +15,6 @@ class PlaylistDocument(Document):
     description = StringField(required=True)
     likes = IntField(required=True)
     views = IntField(required=True)
-    created_date = DateTimeField(required=True)
-    updated_date = DateTimeField(required=True)
     tags = ListField(ReferenceField(TagDocument), required=True)
 
     def to_dto(self) -> PlaylistDto:
@@ -28,7 +25,5 @@ class PlaylistDocument(Document):
             self.description,
             self.likes,
             self.views,
-            self.created_date,
-            self.updated_date,
             [tag.to_dto() for tag in self.tags],
         )
