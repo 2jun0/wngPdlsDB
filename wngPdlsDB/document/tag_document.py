@@ -1,5 +1,5 @@
 from mongoengine import Document, StringField
-from dto.tag_dto import TagDto
+from wngPdlsDB.dto.tag_dto import TagDto
 
 
 class TagDocument(Document):

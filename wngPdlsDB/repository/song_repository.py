@@ -1,9 +1,11 @@
-from document import SongDocument
-from dto import SongDto
+from wngPdlsDB.document import SongDocument
+from wngPdlsDB.dto import SongDto
 
 
 class SongRepository:
-    def create_song(self, genie_id: str, title: str, artist: str, album: str) -> SongDto:
+    def create_song(
+        self, genie_id: str, title: str, artist: str, album: str
+    ) -> SongDto:
         song = SongDocument(genie_id=genie_id, title=title, artist=artist, album=album)
         saved: SongDocument = song.save()
         return saved.to_dto()

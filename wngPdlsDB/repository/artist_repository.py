@@ -1,5 +1,5 @@
-from document import ArtistDocument
-from dto import ArtistDto
+from wngPdlsDB.document import ArtistDocument
+from wngPdlsDB.dto import ArtistDto
 
 
 class ArtistRepository:

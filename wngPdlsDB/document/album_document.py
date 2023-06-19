@@ -1,5 +1,5 @@
 from mongoengine import Document, StringField
-from dto import AlbumDto
+from wngPdlsDB.dto import AlbumDto
 
 
 class AlbumDocument(Document):

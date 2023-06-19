@@ -1,5 +1,5 @@
-from document import AlbumDocument
-from dto import AlbumDto
+from wngPdlsDB.document import AlbumDocument
+from wngPdlsDB.dto import AlbumDto
 
 
 class AlbumRepository:

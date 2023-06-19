@@ -1,5 +1,5 @@
 from mongoengine import Document, StringField
-from dto import SongDto
+from wngPdlsDB.dto import SongDto
 
 
 class SongDocument(Document):
@@ -7,7 +7,6 @@ class SongDocument(Document):
     title = StringField(required=True)
     artist = StringField(required=True)
     album = StringField(required=True)
-    
 
     def to_dto(self) -> SongDto:
         return SongDto(
@@ -15,4 +14,4 @@ class SongDocument(Document):
             self.title,
             self.artist,
             self.album,
-            )
+        )
