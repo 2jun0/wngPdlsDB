@@ -156,11 +156,11 @@ class TestPlaylist(unittest.TestCase):
     def __song(self, genie_id, title, artist, album):
         return self.songRepository.create_song(genie_id, title, artist, album)
 
-    def __artist(self, geine_id, title):
-        return self.artistRepository.create_artist("123", "주혜인")
+    def __artist(self, genie_id, title):
+        return self.artistRepository.create_artist(genie_id, title)
 
     def __album(self, genie_id, title):
-        return self.albumRepository.create_album("1234", "주혜인 1집")
+        return self.albumRepository.create_album(genie_id, title)
 
     def __playlist(self, genie_id, tags, songs=[]):
         return self.playlistRepository.create_playlist(
