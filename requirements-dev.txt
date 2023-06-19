@@ -1,0 +1,4 @@
+mongoengine
+python-dotenv
+pytest
+mongomock
