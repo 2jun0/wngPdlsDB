@@ -1,5 +1,5 @@
 from mongoengine import Document, StringField
-from dto.song_dto import SongDto
+from dto import SongDto
 
 
 class SongDocument(Document):
