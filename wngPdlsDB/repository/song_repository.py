@@ -1,12 +1,21 @@
-from wngPdlsDB.document import SongDocument
-from wngPdlsDB.dto import SongDto
+from wngPdlsDB.document import SongDocument, ArtistDocument, AlbumDocument
+from wngPdlsDB.dto import SongDto, ArtistDto, AlbumDto
 
 
 class SongRepository:
     def create_song(
-        self, genie_id: str, title: str, artist: str, album: str
+        self,
+        genie_id: str,
+        title: str,
+        artist: ArtistDto,
+        album: AlbumDto
     ) -> SongDto:
-        song = SongDocument(genie_id=genie_id, title=title, artist=artist, album=album)
+        song = SongDocument(
+            genie_id=genie_id,
+            title=title,
+            artist=self.__find_artist_doc_by_dto(artist),
+            album=self.__find_album_doc_by_dto(album)
+            )
         saved: SongDocument = song.save()
         return saved.to_dto()
 
@@ -20,3 +29,9 @@ class SongRepository:
     def find_all(self) -> list[SongDto]:
         songs: list[SongDocument] = list(SongDocument.objects)
         return [song.to_dto() for song in songs]
+
+    def __find_artist_doc_by_dto(self, artist: ArtistDto) -> ArtistDocument:
+        return ArtistDocument.objects(genie_id=artist.genie_id).first()
+
+    def __find_album_doc_by_dto(self, album: AlbumDto) -> AlbumDocument:
+        return AlbumDocument.objects(genie_id=album.genie_id).first()
