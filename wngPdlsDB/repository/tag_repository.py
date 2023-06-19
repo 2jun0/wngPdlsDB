@@ -6,3 +6,7 @@ class TagRepository:
         tag = Tag(genie_id=genie_id, title=title)
         return tag.save()
         
+        
+    def delete_tag(self, genie_id: str) -> None:
+        self.__find(genie_id=genie_id)
+
