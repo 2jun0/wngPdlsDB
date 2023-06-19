@@ -1,8 +1,10 @@
 from wngPdlsDB.document import PlaylistDocument
+from wngPdlsDB.dto import PlaylistDto
 
 
 class PlaylistRepository:
     def create_playlist(
+        self,
         genie_id: int,
         title: str,
         description: str,
@@ -10,7 +12,7 @@ class PlaylistRepository:
         views: int,
         created_date,
         updated_date,
-    ):
+    ) -> PlaylistDto:
         playlist = PlaylistDocument(
             genie_id=genie_id,
             title=title,
@@ -20,4 +22,5 @@ class PlaylistRepository:
             created_date=created_date,
             updated_date=updated_date,
         )
-        playlist.save()
+        saved: PlaylistDocument = playlist.save()
+        return saved.to_dto()
