@@ -1,2 +1,3 @@
 from wngPdlsDB.exception.not_found_tag_exception import NotFoundTagException
 from wngPdlsDB.exception.not_found_image_exception import NotFoundImageException
+from wngPdlsDB.exception.not_found_playlist_exception import NotFoundPlaylistException
