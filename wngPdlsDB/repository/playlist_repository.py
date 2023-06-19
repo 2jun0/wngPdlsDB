@@ -1,7 +1,11 @@
 from mongoengine import QuerySet
-from wngPdlsDB.document import PlaylistDocument, TagDocument
-from wngPdlsDB.dto import PlaylistDto, TagDto
-from wngPdlsDB.exception import NotFoundPlaylistException, NotFoundTagException
+from wngPdlsDB.document import PlaylistDocument, TagDocument, SongDocument
+from wngPdlsDB.dto import PlaylistDto, TagDto, SongDto
+from wngPdlsDB.exception import (
+    NotFoundPlaylistException,
+    NotFoundTagException,
+    NotFoundSongException,
+)
 
 
 class PlaylistRepository:
@@ -13,6 +17,7 @@ class PlaylistRepository:
         likes: int,
         views: int,
         tags: list[TagDto],
+        songs: list[SongDto],
     ) -> PlaylistDto:
         playlist = PlaylistDocument(
             genie_id=genie_id,
@@ -20,7 +25,8 @@ class PlaylistRepository:
             description=description,
             likes=likes,
             views=views,
-            tags=self.__find_tags_doc_by_dto(tags),
+            tags=self.__find_tag_docs_by_dto(tags),
+            songs=self.__find_song_docs_by_dto(songs),
         )
         saved: PlaylistDocument = playlist.save()
         return saved.to_dto()
@@ -52,6 +58,13 @@ class PlaylistRepository:
         playlists: list[PlaylistDocument] = list(PlaylistDocument.objects(tags=tag_doc))
         return [playlist.to_dto() for playlist in playlists]
 
+    def find_by_song(self, song: SongDto) -> list[SongDto]:
+        song_doc = self.__find_song_doc_by_dto(song)
+        playlists: list[PlaylistDocument] = list(
+            PlaylistDocument.objects(songs=song_doc)
+        )
+        return [playlist.to_dto() for playlist in playlists]
+
     def __find_tag_doc_by_dto(self, tag: TagDto) -> TagDocument:
         query_set = TagDocument.objects(genie_id=tag.genie_id)
 
@@ -60,11 +73,28 @@ class PlaylistRepository:
 
         return query_set.first()
 
-    def __find_tags_doc_by_dto(self, tags: list[TagDto]) -> QuerySet:
+    def __find_tag_docs_by_dto(self, tags: list[TagDto]) -> QuerySet:
         tag_genie_ids = [tag.genie_id for tag in tags]
         query_set = TagDocument.objects(genie_id__in=tag_genie_ids)
 
+        if tags and not query_set:
+            raise NotFoundTagException(f"Can't find tag documents: {tags}")
+
+        return query_set
+
+    def __find_song_doc_by_dto(self, song: SongDto) -> SongDocument:
+        query_set = SongDocument.objects(genie_id=song.genie_id)
+
         if not query_set:
-            raise NotFoundTagException(f"Can't find tags document: {tags}")
+            raise NotFoundSongException(f"Can't find song document: {song}")
+
+        return query_set.first()
+
+    def __find_song_docs_by_dto(self, songs: list[SongDto]) -> QuerySet:
+        songs_genie_ids = [songs.genie_id for songs in songs]
+        query_set = SongDocument.objects(genie_id__in=songs_genie_ids)
+
+        if songs and not query_set:
+            raise NotFoundSongException(f"Can't find song documents: {songs}")
 
         return query_set

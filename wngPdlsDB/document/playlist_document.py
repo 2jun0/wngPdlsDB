@@ -7,6 +7,7 @@ from mongoengine import (
 )
 from wngPdlsDB.dto import PlaylistDto
 from wngPdlsDB.document.tag_document import TagDocument
+from wngPdlsDB.document.song_document import SongDocument
 
 
 class PlaylistDocument(Document):
@@ -16,6 +17,7 @@ class PlaylistDocument(Document):
     likes = IntField(required=True)
     views = IntField(required=True)
     tags = ListField(ReferenceField(TagDocument), required=True)
+    songs = ListField(ReferenceField(SongDocument))
 
     def to_dto(self) -> PlaylistDto:
         return PlaylistDto(
@@ -26,4 +28,5 @@ class PlaylistDocument(Document):
             self.likes,
             self.views,
             [tag.to_dto() for tag in self.tags],
+            [song.to_dto() for song in self.songs],
         )
