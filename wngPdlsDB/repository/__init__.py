@@ -1,1 +1,2 @@
 from wngPdlsDB.repository.playlist_repository import PlaylistRepository
+from wngPdlsDB.repository.tag_repository import TagRepository
