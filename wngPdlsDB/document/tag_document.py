@@ -7,4 +7,4 @@ class TagDocument(Document):
     title = StringField(required=True, unique=True)
 
     def to_dto(self) -> TagDto:
-        return TagDto(self.id, self.genie_id, self.title)
+        return TagDto(self.id.toString(), self.genie_id, self.title)
