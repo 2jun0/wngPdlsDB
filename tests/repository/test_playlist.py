@@ -4,6 +4,8 @@ import os
 import unittest
 import mongomock
 from wngPdlsDB.repository import PlaylistRepository, TagRepository
+from wngPdlsDB.exception import NotFoundPlaylistException, NotFoundTagException
+from wngPdlsDB.dto import TagDto
 
 
 class TestPlaylist(unittest.TestCase):
@@ -31,7 +33,26 @@ class TestPlaylist(unittest.TestCase):
         wngPdlsDB.disconnect()
 
     def test_create_playlist(self):
-        self.__playlist(1, [self.__tag("G1", "기쁨")])
+        tag = self.__tag("G1", "기쁨")
+        self.__playlist(1, [tag])
+
+        # not exists tag
+        fake_tag = TagDto("123", "G3", "없는것")
+        self.assertRaises(NotFoundTagException, lambda: self.__playlist(2, [fake_tag]))
+
+    def test_delete_by_genie_id(self):
+        tag = self.__tag("G1", "기쁨")
+        playlist = self.__playlist(1, [tag])
+
+        self.playlistRepository.delete_by_genie_id(playlist.genie_id)
+        found = self.playlistRepository.find_by_genie_id(playlist.genie_id)
+        assert found is None
+
+        # not exists playlist
+        self.assertRaises(
+            NotFoundPlaylistException,
+            lambda: self.playlistRepository.delete_by_genie_id(playlist.genie_id),
+        )
 
     def test_find_by_geine_id(self):
         playlist = self.__playlist(1, [self.__tag("G1", "기쁨")])
@@ -63,6 +84,13 @@ class TestPlaylist(unittest.TestCase):
             assert playlist in found
         for playlist in playlists2:
             assert playlist not in found
+
+        # not exists tag
+        fake_tag = TagDto("123", "G4", "없는것")
+
+        self.assertRaises(
+            NotFoundTagException, lambda: self.playlistRepository.find_by_tag(fake_tag)
+        )
 
     def __tag(self, genie_id, title):
         return self.tagRepository.create_tag(genie_id, title)
