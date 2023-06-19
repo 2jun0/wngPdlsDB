@@ -37,8 +37,8 @@ class PlaylistRepository:
 
     def find_by_tag(self, tag: TagDto) -> list[PlaylistDto]:
         tag_doc = self.__find_tag_doc_by_dto(tag)
-        playlist: PlaylistDocument = PlaylistDocument.objects(tag=tag_doc).first()
-        return playlist.to_dto()
+        playlists: list[PlaylistDocument] = list(PlaylistDocument.objects(tags=tag_doc))
+        return [playlist.to_dto() for playlist in playlists]
 
     def __find_tag_doc_by_dto(self, tag: TagDto) -> TagDocument:
         return TagDocument.objects(genie_id=tag.genie_id).first()
