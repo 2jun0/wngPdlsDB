@@ -1,6 +1,6 @@
 from wngPdlsDB.document import ImageDocument, TagDocument
 from wngPdlsDB.dto import ImageDto, TagDto
-from wngPdlsDB.exception import NotFoundTagException
+from wngPdlsDB.exception import NotFoundTagException, NotFoundImageException
 
 
 class ImageRepository:
@@ -17,7 +17,12 @@ class ImageRepository:
         return saved.to_dto()
 
     def delete_by_id(self, id: str) -> None:
-        ImageDocument.objects(id=id).delete()
+        query_set = ImageDocument.objects(id=id)
+
+        if not query_set:
+            raise NotFoundImageException(f"Can't find image document: id={id}")
+
+        query_set.delete()
 
     def find_by_id(self, id: str) -> ImageDto | None:
         image: ImageDocument = ImageDocument.objects(id=id).first()
