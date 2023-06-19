@@ -1,5 +1,5 @@
 from wngPdlsDB.document import SongDocument
-from wngPdlsDB.document import SongDto
+from wngPdlsDB.dto.song_dto import SongDto
 
 
 class SongRepository:
