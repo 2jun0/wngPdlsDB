@@ -1,5 +1,13 @@
-from mongoengine import Document, StringField, IntField, DateTimeField
+from mongoengine import (
+    Document,
+    StringField,
+    IntField,
+    DateTimeField,
+    ListField,
+    ReferenceField,
+)
 from wngPdlsDB.dto import PlaylistDto
+from wngPdlsDB.document import TagDocument
 
 
 class PlaylistDocument(Document):
@@ -10,6 +18,7 @@ class PlaylistDocument(Document):
     views = IntField(required=True)
     created_date = DateTimeField(required=True)
     updated_date = DateTimeField(required=True)
+    tags = ListField(ReferenceField(TagDocument), required=True)
 
     def to_dto(self) -> PlaylistDto:
         return PlaylistDto(
@@ -20,4 +29,5 @@ class PlaylistDocument(Document):
             self.views,
             self.created_date,
             self.updated_date,
+            [tag.to_dto for tag in self.tags],
         )

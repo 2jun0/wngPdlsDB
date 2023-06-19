@@ -1,5 +1,5 @@
-from wngPdlsDB.document import PlaylistDocument
-from wngPdlsDB.dto import PlaylistDto
+from wngPdlsDB.document import PlaylistDocument, TagDocument
+from wngPdlsDB.dto import PlaylistDto, TagDto
 
 
 class PlaylistRepository:
@@ -12,7 +12,10 @@ class PlaylistRepository:
         views: int,
         created_date,
         updated_date,
+        tags: list[TagDto],
     ) -> PlaylistDto:
+        tag_docs = [TagDocument.objects(genie_id=tag.genie_id) for tag in tags]
+
         playlist = PlaylistDocument(
             genie_id=genie_id,
             title=title,
@@ -21,6 +24,7 @@ class PlaylistRepository:
             views=views,
             created_date=created_date,
             updated_date=updated_date,
+            tags=tag_docs,
         )
         saved: PlaylistDocument = playlist.save()
         return saved.to_dto()
