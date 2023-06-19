@@ -1,6 +1,7 @@
 from mongoengine import Document, StringField, ReferenceField
 from wngPdlsDB.dto import SongDto
-from wngPdlsDB.document import ArtistDocument , AlbumDocument
+from wngPdlsDB.document.artist_document import ArtistDocument
+from wngPdlsDB.document.album_document import AlbumDocument
 
 
 class SongDocument(Document):

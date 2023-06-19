@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-from wngPdlsDB.dto import ArtistDto, AlbumDto
+from wngPdlsDB.dto.artist_dto import ArtistDto
+from wngPdlsDB.dto.album_dto import AlbumDto
 
 
 @dataclass
