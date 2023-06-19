@@ -25,6 +25,9 @@ class PlaylistRepository:
         saved: PlaylistDocument = playlist.save()
         return saved.to_dto()
 
+    def delete_playlist(self, genie_id: str) -> None:
+        self.find_by_genie_id(genie_id).delete()
+
     def find_by_genie_id(self, genie_id: str) -> PlaylistDto:
         playlist: PlaylistDocument = PlaylistDocument.objects(genie_id=genie_id).first()
         return playlist.to_dto()
