@@ -1,5 +1,5 @@
 from mongoengine import Document, StringField
-from dto.tag_dto import ArtistDto
+from dto.artist_dto import ArtistDto
 
 
 class ArtistDocument(Document):
