@@ -9,12 +9,32 @@ wngPdlsDB.connect(db, host, username, password)
 
 ### Song
 ```python
+from wngPdlsDB.repository import SongRepository
 
+songRepository = SongRepository()
+
+# create song
+song = songRepository.create_song("1000", "노래", "주혜인", "주혜인 1집")
+
+# find by genie id
+song = songRepository.find_by_genie_id("1000")
+
+# find all
+songs = songRepository.find_all()
+
+# find by artist
+songs = songRepository.find_by_artist("주혜인")
+
+# find by album
+songs = songRepository.find_by_album("주혜인 1집")
+
+# delete by genie id
+songRepository.delete_by_genie_id("1000")
 ```
 
 ### Playlist
 ```python
-from wngpdlsDB.repository import PlaylistRepository
+from wngPdlsDB.repository import PlaylistRepository
 
 playlistRepository = PlaylistRepository()
 
@@ -39,7 +59,7 @@ playlistRepository.delete_by_genie_id("1000")
 
 ### Tag
 ```python
-from wngpdlsDB.repository import TagRepository
+from wngPdlsDB.repository import TagRepository
 
 tagRepository = TagRepository()
 
@@ -58,7 +78,7 @@ tagRepository.delete_by_genie_id("T1")
 
 ### Image
 ```python
-from wngpdlsDB.repository import ImageRepository
+from wngPdlsDB.repository import ImageRepository
 
 imageRepository = ImageRepository()
 
@@ -80,12 +100,40 @@ imageRepository.delete_by_id("324dfs3233289sa034") # object id (image.id)
 
 ### Album
 ```python
+from wngPdlsDB.repository import AlbumRepository
 
+AlbumRepository = AlbumRepository()
+
+# create album
+album = AlbumRepository.create_album("A1", "주혜인 1집")
+
+# find by genie id
+album = AlbumRepository.find_by_genie_id("A1")
+
+# find all
+albums = AlbumRepository.find_all()
+
+# delete by genie id
+AlbumRepository.delete_by_genie_id("A1")
 ```
 
 ### Artist
 ```python
+from wngPdlsDB.repository import ArtistRepository
 
+ArtistRepository = ArtistRepository()
+
+# create album
+artist = ArtistRepository.create_artist("H1", "주혜인")
+
+# find by genie id
+artist = ArtistRepository.find_by_genie_id("H1")
+
+# find all
+artists = ArtistRepository.find_all()
+
+# delete by genie id
+ArtistRepository.delete_by_genie_id("H1")
 ```
 
 ## 💬 How to install
