@@ -9,12 +9,17 @@ wngPdlsDB.connect(db, host, username, password)
 
 ### Song
 ```python
-from wngPdlsDB.repository import SongRepository
+from wngPdlsDB.repository import SongRepository, ArtistRepository, AlbumRepository
 
 songRepository = SongRepository()
+artistRepository = ArtistRepository()
+albumRepository = AlbumRepository()
+
+artist = artistRepository.find_by_genie_id("1000")
+album = albumRepository.find_by_genie_id("1000")
 
 # create song
-song = songRepository.create_song("1000", "노래", "주혜인", "주혜인 1집")
+song = songRepository.create_song("1000", "노래", artist, album)
 
 # find by genie id
 song = songRepository.find_by_genie_id("1000")
@@ -23,10 +28,10 @@ song = songRepository.find_by_genie_id("1000")
 songs = songRepository.find_all()
 
 # find by artist
-songs = songRepository.find_by_artist("주혜인")
+songs = songRepository.find_by_artist(artist)
 
 # find by album
-songs = songRepository.find_by_album("주혜인 1집")
+songs = songRepository.find_by_album(album)
 
 # delete by genie id
 songRepository.delete_by_genie_id("1000")
