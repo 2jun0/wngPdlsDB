@@ -41,7 +41,7 @@ class TestPlaylist(unittest.TestCase):
         # not exists tag
         fake_tag = TagDto("123", "G3", "없는것")
         self.assertRaises(
-            NotFoundTagException, lambda: self.__playlist("3", [fake_tag])
+            NotFoundTagException, lambda: self.__playlist("3", [fake_tag], [song])
         )
 
         # not exists song
@@ -52,7 +52,10 @@ class TestPlaylist(unittest.TestCase):
 
     def test_delete_by_genie_id(self):
         tag = self.__tag("G1", "기쁨")
-        playlist = self.__playlist("1", [tag])
+        album = self.__album("A1", "주혜인 1집")
+        artist = self.__artist("H1", "주혜인")
+        song = self.__song("S1", "노래", artist, album)
+        playlist = self.__playlist("1", [tag], [song])
 
         self.playlistRepository.delete_by_genie_id(playlist.genie_id)
         found = self.playlistRepository.find_by_genie_id(playlist.genie_id)
@@ -65,17 +68,23 @@ class TestPlaylist(unittest.TestCase):
         )
 
     def test_find_by_geine_id(self):
-        playlist = self.__playlist("1", [self.__tag("G1", "기쁨")])
+        album = self.__album("A1", "주혜인 1집")
+        artist = self.__artist("H1", "주혜인")
+        song = self.__song("S1", "노래", artist, album)
+        playlist = self.__playlist("1", [self.__tag("G1", "기쁨")], [song])
 
         found = self.playlistRepository.find_by_genie_id(playlist.genie_id)
         assert playlist == found
 
     def test_find_all(self):
         tag = self.__tag("G1", "기쁨")
+        album = self.__album("A1", "주혜인 1집")
+        artist = self.__artist("H1", "주혜인")
+        song = self.__song("S1", "노래", artist, album)
         playlists = [
-            self.__playlist("1", [tag]),
-            self.__playlist("2", [tag]),
-            self.__playlist("3", [tag]),
+            self.__playlist("1", [tag], [song]),
+            self.__playlist("2", [tag], [song]),
+            self.__playlist("3", [tag], [song]),
         ]
 
         found = self.playlistRepository.find_all()
@@ -86,8 +95,16 @@ class TestPlaylist(unittest.TestCase):
         tag1 = self.__tag("G1", "기쁨")
         tag2 = self.__tag("G2", "슬픔")
         tag3 = self.__tag("G3", "행복")
-        playlists1 = [self.__playlist("1", [tag1]), self.__playlist("2", [tag1, tag2])]
-        playlists2 = [self.__playlist("3", [tag2, tag3])]
+
+        album = self.__album("A1", "주혜인 1집")
+        artist = self.__artist("H1", "주혜인")
+        song = self.__song("S1", "노래", artist, album)
+
+        playlists1 = [
+            self.__playlist("1", [tag1], [song]),
+            self.__playlist("2", [tag1, tag2], [song]),
+        ]
+        playlists2 = [self.__playlist("3", [tag2, tag3], [song])]
 
         found = self.playlistRepository.find_by_tag(tag1)
         for playlist in playlists1:
@@ -106,8 +123,16 @@ class TestPlaylist(unittest.TestCase):
         tag1 = self.__tag("G1", "기쁨")
         tag2 = self.__tag("G2", "슬픔")
         tag3 = self.__tag("G3", "행복")
-        playlists1 = [self.__playlist("1", [tag1]), self.__playlist("2", [tag1, tag2])]
-        playlists2 = [self.__playlist("3", [tag2, tag3])]
+
+        album = self.__album("A1", "주혜인 1집")
+        artist = self.__artist("H1", "주혜인")
+        song = self.__song("S1", "노래", artist, album)
+
+        playlists1 = [
+            self.__playlist("1", [tag1], [song]),
+            self.__playlist("2", [tag1, tag2], [song]),
+        ]
+        playlists2 = [self.__playlist("3", [tag2, tag3], [song])]
 
         found = self.playlistRepository.find_by_tag(tag1)
         for playlist in playlists1:
@@ -162,7 +187,7 @@ class TestPlaylist(unittest.TestCase):
     def __album(self, genie_id, title):
         return self.albumRepository.create_album(genie_id, title)
 
-    def __playlist(self, genie_id, tags, songs=[]):
+    def __playlist(self, genie_id, tags, songs):
         return self.playlistRepository.create_playlist(
             genie_id, "주혜인의 플리", "스타가 될거야!", 10, 20, tags, songs
         )

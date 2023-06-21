@@ -13,12 +13,12 @@ from wngPdlsDB.document.song_document import SongDocument
 
 def should_have_at_least_one_tag(tags: list[TagDocument]):
     if len(tags) <= 0:
-        raise ValidationError(f"Playlist should have at least one tags: {tags}")
+        raise ValidationError("Playlist should have at least one tags")
 
 
 def should_have_at_least_one_song(songs: list[SongDocument]):
     if len(songs) <= 0:
-        raise ValidationError(f"Playlist should have at least one songs: {songs}")
+        raise ValidationError("Playlist should have at least one songs")
 
 
 class PlaylistDocument(Document):
