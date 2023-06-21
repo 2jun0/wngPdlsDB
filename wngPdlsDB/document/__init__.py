@@ -3,5 +3,5 @@ from wngPdlsDB.document.tag_document import TagDocument
 from wngPdlsDB.document.song_document import SongDocument
 from wngPdlsDB.document.artist_document import ArtistDocument
 from wngPdlsDB.document.album_document import AlbumDocument
-from wngPdlsDB.document.image_document import taggedImageDocument
+from wngPdlsDB.document.tagged_image_document import TaggedImageDocument
 from wngPdlsDB.document.untagged_image_document import UntaggedImageDocument
