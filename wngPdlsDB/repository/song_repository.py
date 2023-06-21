@@ -1,7 +1,7 @@
 from wngPdlsDB.document import SongDocument, ArtistDocument, AlbumDocument
 from wngPdlsDB.dto import SongDto, ArtistDto, AlbumDto
 from wngPdlsDB.exception import NotFoundSongException
-from repository.common import _find_artist_doc_by_dto, _find_album_doc_by_dto
+from wngPdlsDB.repository.common import _find_artist_doc_by_dto, _find_album_doc_by_dto
 
 
 class SongRepository:
