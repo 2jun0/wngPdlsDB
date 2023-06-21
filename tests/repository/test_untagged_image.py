@@ -2,7 +2,6 @@ import wngPdlsDB
 import unittest
 from tests.repository.common import connect_to_db
 from wngPdlsDB.repository import UntaggedImageRepository
-from wngPdlsDB.dto import TagDto
 from wngPdlsDB.exception import NotFoundImageException
 
 
