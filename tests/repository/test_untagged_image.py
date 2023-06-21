@@ -58,4 +58,4 @@ class TestUntaggedImage(unittest.TestCase):
         assert image2 in found
 
     def __untagged_image(self, url):
-        return self.untagedImageRepository.create_image(url)
+        return self.untaggedImageRepository.create_image(url)
