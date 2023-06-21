@@ -81,11 +81,11 @@ founds = tagRepository.find_all()
 tagRepository.delete_by_genie_id("T1")
 ```
 
-### Image
+### Tagged Image
 ```python
-from wngPdlsDB.repository import ImageRepository
+from wngPdlsDB.repository import TaggedImageRepository
 
-imageRepository = ImageRepository()
+imageRepository = TaggedImageRepository()
 
 # create image
 image = imageRepository.create_image("https://wngPdls.com/image/wau2j4kjdf", tag)

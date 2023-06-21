@@ -1,14 +1,14 @@
 import wngPdlsDB
 import unittest
 from tests.repository.common import connect_to_db
-from wngPdlsDB.repository import ImageRepository, TagRepository
+from wngPdlsDB.repository import TaggedImageRepository, TagRepository
 from wngPdlsDB.dto import TagDto
 from wngPdlsDB.exception import NotFoundTagException, NotFoundImageException
 
 
 class TestImage(unittest.TestCase):
     tagRepository = TagRepository()
-    imageRepository = ImageRepository()
+    imageRepository = TaggedImageRepository()
 
     @classmethod
     def setUp(cls):
