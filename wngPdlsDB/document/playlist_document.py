@@ -4,10 +4,21 @@ from mongoengine import (
     IntField,
     ListField,
     ReferenceField,
+    ValidationError,
 )
 from wngPdlsDB.dto import PlaylistDto
 from wngPdlsDB.document.tag_document import TagDocument
 from wngPdlsDB.document.song_document import SongDocument
+
+
+def should_have_at_least_one_tag(tags: list[TagDocument]):
+    if len(tags) <= 0:
+        raise ValidationError("Playlist should have at least one tags")
+
+
+def should_have_at_least_one_song(songs: list[SongDocument]):
+    if len(songs) <= 0:
+        raise ValidationError("Playlist should have at least one songs")
 
 
 class PlaylistDocument(Document):
@@ -16,8 +27,16 @@ class PlaylistDocument(Document):
     description = StringField(required=True)
     likes = IntField(required=True)
     views = IntField(required=True)
-    tags = ListField(ReferenceField(TagDocument), required=True)
-    songs = ListField(ReferenceField(SongDocument))
+    tags = ListField(
+        ReferenceField(TagDocument),
+        required=True,
+        validation=should_have_at_least_one_tag,
+    )
+    songs = ListField(
+        ReferenceField(SongDocument),
+        required=True,
+        validation=should_have_at_least_one_song,
+    )
 
     def to_dto(self) -> PlaylistDto:
         return PlaylistDto(

@@ -81,14 +81,18 @@ founds = tagRepository.find_all()
 tagRepository.delete_by_genie_id("T1")
 ```
 
-### Image
+### Tagged Image
 ```python
-from wngPdlsDB.repository import ImageRepository
+from wngPdlsDB.repository import TaggedImageRepository
 
-imageRepository = ImageRepository()
+imageRepository = TaggedImageRepository()
+
+# create tag
+tag1 = tagRepository.create_tag("T1", "행복")
+tag2 = tagRepository.create_tag("T2", "슬픔")
 
 # create image
-image = imageRepository.create_image("https://wngPdls.com/image/wau2j4kjdf", tag)
+image = imageRepository.create_image("https://wngPdls.com/image/wau2j4kjdf", [tag1, tag2])
 
 # find by genie id
 found = imageRepository.find_by_id("324dfs3233289sa034") # object id (image.id)
@@ -97,7 +101,7 @@ found = imageRepository.find_by_id("324dfs3233289sa034") # object id (image.id)
 founds = imageRepository.find_all()
 
 # find by tag
-founds = imageRepository.find_by_tag(tag)
+founds = imageRepository.find_by_tag(tag1)
 
 # delete by genie id
 imageRepository.delete_by_id("324dfs3233289sa034") # object id (image.id)
