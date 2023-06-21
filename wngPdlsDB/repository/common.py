@@ -43,6 +43,16 @@ def _find_tag_docs_by_dto(tags: tuple[TagDto]) -> QuerySet:
     if tags and not query_set:
         raise NotFoundTagException(f"Can't find tag documents: {tags}")
 
+    if len(query_set) != len(tags):
+        not_found_tags = []
+        founds = list(query_set)
+
+        for song in tags:
+            if song in founds:
+                not_found_tags.append(song)
+
+        raise NotFoundTagException(f"Can't find tag documents: {not_found_tags}")
+
     return query_set
 
 
@@ -61,5 +71,15 @@ def _find_song_docs_by_dto(songs: tuple[SongDto]) -> QuerySet:
 
     if songs and not query_set:
         raise NotFoundSongException(f"Can't find song documents: {songs}")
+
+    if len(query_set) != len(songs):
+        not_found_songs = []
+        founds = list(query_set)
+
+        for song in songs:
+            if song in founds:
+                not_found_songs.append(song)
+
+        raise NotFoundSongException(f"Can't find song documents: {not_found_songs}")
 
     return query_set
