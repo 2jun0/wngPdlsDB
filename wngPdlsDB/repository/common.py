@@ -36,7 +36,7 @@ def _find_tag_doc_by_dto(tag: TagDto) -> TagDocument:
     return query_set.first()
 
 
-def _find_tag_docs_by_dto(tags: list[TagDto]) -> QuerySet:
+def _find_tag_docs_by_dto(tags: tuple[TagDto]) -> QuerySet:
     tag_genie_ids = [tag.genie_id for tag in tags]
     query_set = TagDocument.objects(genie_id__in=tag_genie_ids)
 
@@ -55,7 +55,7 @@ def _find_song_doc_by_dto(song: SongDto) -> SongDocument:
     return query_set.first()
 
 
-def _find_song_docs_by_dto(songs: list[SongDto]) -> QuerySet:
+def _find_song_docs_by_dto(songs: tuple[SongDto]) -> QuerySet:
     songs_genie_ids = [songs.genie_id for songs in songs]
     query_set = SongDocument.objects(genie_id__in=songs_genie_ids)
 

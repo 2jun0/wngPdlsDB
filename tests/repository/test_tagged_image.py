@@ -20,18 +20,19 @@ class TestImage(unittest.TestCase):
 
     def test_create_image(self):
         tag = self.__tag("G1", "기쁨")
-        self.__image("http://google.com/1", tag)
+        self.__image("http://google.com/1", [tag])
 
         # not exists tag
         fake_tag = TagDto("123", "G3", "없는것")
         self.assertRaises(
-            NotFoundTagException, lambda: self.__image("http://google.com/2", fake_tag)
+            NotFoundTagException,
+            lambda: self.__image("http://google.com/2", [fake_tag]),
         )
 
     def test_delete_by_id(self):
         # success
         tag = self.__tag("G1", "기쁨")
-        image = self.__image("http://google.com/1", tag)
+        image = self.__image("http://google.com/1", [tag])
 
         self.imageRepository.delete_by_id(image.id)
         found = self.imageRepository.find_by_id(image.id)
@@ -45,8 +46,8 @@ class TestImage(unittest.TestCase):
 
     def test_find_by_id(self):
         tag = self.__tag("G1", "기쁨")
-        image1 = self.__image("http://google.com/1", tag)
-        image2 = self.__image("http://google.com/2", tag)
+        image1 = self.__image("http://google.com/1", [tag])
+        image2 = self.__image("http://google.com/2", [tag])
 
         found = self.imageRepository.find_by_id(image1.id)
         assert image1 == found
@@ -54,8 +55,8 @@ class TestImage(unittest.TestCase):
 
     def test_find_all(self):
         tag = self.__tag("G1", "기쁨")
-        image1 = self.__image("http://google.com/1", tag)
-        image2 = self.__image("http://google.com/2", tag)
+        image1 = self.__image("http://google.com/1", [tag])
+        image2 = self.__image("http://google.com/2", [tag])
 
         found = self.imageRepository.find_all()
         assert image1 in found
@@ -65,11 +66,12 @@ class TestImage(unittest.TestCase):
         # success
         tag1 = self.__tag("G1", "기쁨")
         tag2 = self.__tag("G2", "슬픔")
+        tag3 = self.__tag("G3", "행복")
         images1 = [
-            self.__image("http://google.com/1", tag1),
-            self.__image("http://google.com/2", tag1),
+            self.__image("http://google.com/1", [tag1, tag2]),
+            self.__image("http://google.com/2", [tag1, tag3]),
         ]
-        images2 = [self.__image("http://google.com/3", tag2)]
+        images2 = [self.__image("http://google.com/3", [tag2, tag3])]
 
         found = self.imageRepository.find_by_tag(tag1)
         for image in images1:
@@ -78,7 +80,7 @@ class TestImage(unittest.TestCase):
             assert image not in found
 
         # not exists tag
-        fake_tag = TagDto("123", "G3", "없는것")
+        fake_tag = TagDto("123", "G4", "없는것")
 
         self.assertRaises(
             NotFoundTagException, lambda: self.imageRepository.find_by_tag(fake_tag)
@@ -87,5 +89,5 @@ class TestImage(unittest.TestCase):
     def __tag(self, genie_id, title):
         return self.tagRepository.create_tag(genie_id, title)
 
-    def __image(self, url, tag):
-        return self.imageRepository.create_image(url, tag)
+    def __image(self, url, tags):
+        return self.imageRepository.create_image(url, tags)

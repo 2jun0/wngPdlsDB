@@ -1,18 +1,18 @@
 from wngPdlsDB.document import TaggedImageDocument
 from wngPdlsDB.dto import TaggedImageDto, TagDto
 from wngPdlsDB.exception import NotFoundImageException
-from wngPdlsDB.repository.common import _find_tag_doc_by_dto
+from wngPdlsDB.repository.common import _find_tag_docs_by_dto, _find_tag_doc_by_dto
 
 
 class TaggedImageRepository:
     def create_image(
         self,
         url: str,
-        tag: TagDto,
+        tags: list[TagDto],
     ) -> TaggedImageDocument:
         image = TaggedImageDocument(
             url=url,
-            tag=_find_tag_doc_by_dto(tag),
+            tags=_find_tag_docs_by_dto(tags),
         )
         saved: TaggedImageDocument = image.save()
         return saved.to_dto()
@@ -38,8 +38,8 @@ class TaggedImageRepository:
         return [image.to_dto() for image in images]
 
     def find_by_tag(self, tag: TagDto) -> list[TaggedImageDto]:
-        tag_doc = self.__find_tag_doc_by_dto(tag)
+        tag_doc = _find_tag_doc_by_dto(tag)
         images: list[TaggedImageDocument] = list(
-            TaggedImageDocument.objects(tag=tag_doc)
+            TaggedImageDocument.objects(tags=tag_doc)
         )
         return [image.to_dto() for image in images]

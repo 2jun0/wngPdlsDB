@@ -6,4 +6,4 @@ from wngPdlsDB.dto.tag_dto import TagDto
 class TaggedImageDto:
     id: str
     url: str
-    tag: TagDto
+    tags: list[TagDto]
