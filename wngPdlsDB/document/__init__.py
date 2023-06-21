@@ -4,3 +4,4 @@ from wngPdlsDB.document.song_document import SongDocument
 from wngPdlsDB.document.artist_document import ArtistDocument
 from wngPdlsDB.document.album_document import AlbumDocument
 from wngPdlsDB.document.image_document import ImageDocument
+from wngPdlsDB.document.untagged_image_document import UntaggedImageDocument
