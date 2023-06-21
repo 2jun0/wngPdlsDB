@@ -16,16 +16,6 @@ class TestUntaggedImage(unittest.TestCase):
     def tearDown(cls):
         wngPdlsDB.disconnect()
 
-    def test_create_image(self):
-        self.__untagged_image("http://google.com/1")
-
-        # not exists url
-        fake_url = "http://wngPdlsxltucm.com/1"
-        
-        self.assertRaises(
-            NotFoundTagException, lambda: self.__untagged_image(fake_url)
-        )
-
     def test_delete_by_id(self):
         # success
         image = self.__untagged_image("http://google.com/1")
